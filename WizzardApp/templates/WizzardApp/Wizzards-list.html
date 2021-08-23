@@ -1,0 +1,130 @@
+{% extends 'DashboardApp/Base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <h2 class="text-center display-4">Wizzards list</h2>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <form action="list" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12 offset-md-0">
+                        <div class="form-group">
+                            <div class="input-group input-group-lg">
+                                <input type="search" class="form-control form-control-lg" placeholder="Search here">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-lg btn-default">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Region:</label>
+                                    <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
+                                        <option><h7>East Africa</h7></option>
+                                        <option>Rwanda</option>
+                                        <option>Uganda</option>
+                                        <option>United States</option>
+                                        <option>United Kingdom</option>
+                                        <option>Burundi</option>
+                                        <option>Tanzania</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Sort Order:</label>
+                                    <select class="select2" style="width: 100%;">
+                                        <option selected>ASC</option>
+                                        <option>DESC</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Order By:</label>
+                                    <select class="select2" style="width: 100%;">
+                                        <option selected>Title</option>
+                                        <option>Date</option>
+                                        <option>Author</option>
+                                        <option>Reviews</option>
+                                        <option>Region</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- List of Wizzards-->
+            <div class="row mt-3">
+                <div class="col-md-12 offset-md-0">
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="float-right">
+                                <a href=".">Verified</a>
+                                <i class="fa fa-check-circle"></i>
+                            </div>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <img class="img-fluid" src="{% static 'dist/img/photo1.png' %}" alt="Photo" style="max-height: 160px;">
+                                </div>
+                                <div class="col px-4">
+                                    <div>
+                                        <a class="nav-item" href="."><h3>Rwanda motor vehicle import taxing</h3></a>
+                                        <p class="mb-0"> A detailed guide to import motor vehicle in Rwanda through Rwanda Revenue Authority</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-group-item attributes">
+                                <div class="col-3 float-left">Source :<a>Rwanda Revenue...</a></div>
+                                <div class="col-3 float-left">Reviews:
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+                                <div class="col-3 float-left">Requests 3,500 Times</div>
+                                <div class="float-right">Last update 3 days ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pagination-->
+            <div class="row mt-3">
+                <div class="col-md-12 offset-md-0">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><a class="page-link" href="#">«</a></li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">»</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+
+
+{% endblock %}

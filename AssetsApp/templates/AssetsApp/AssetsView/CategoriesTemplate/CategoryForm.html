@@ -1,0 +1,37 @@
+{% load static %}
+
+{% block CategoryForm %}
+
+<div class="modal fade" id="AssetsCategory">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Assets Categories Form</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{% url 'Add_Assets_Category' %}  method="POST">
+            <div class="modal-body">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="category_name">Category Name</label>
+                    <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" name="description" id="description" placeholder="Description i.e: examples">
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit button" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+{% endblock %}

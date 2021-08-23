@@ -1,0 +1,80 @@
+{% load static %}
+
+{% block AssetForm %}
+
+<div class="modal fade" id="AssetForm">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Asset Form</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{% url 'Add_Asset' %}" method="POST">
+            <div class="modal-body">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="account_name">Name</label>
+                    <input type="text" class="form-control" name="account_name" id="account_name" placeholder="Account Name">
+                </div>
+                <div class="form-group">
+                    <label for="type">Category</label>
+                        <select class="select2" name="type" id="type" style="width: 100%;">
+                            <option selected>Account</option>
+                            <option>Person</option>
+                            <option>Credit Card</option>
+                            <option>Debit Card</option>
+                            <option>E-wallet</option>
+                            <option>Cryptocurrency</option>
+                            <option>Person</option>
+                            <option>Cash</option>
+                            <option>Person</option>
+                            <option>Loan</option>
+                            <option>Insurance</option>
+                            <option>Credit Card</option>
+                            <option>Investments</option>
+                            <option>Overdraft</option>
+                            <option>Savings</option>
+                            <option>Institution</option>
+                        </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" name="description" id="description" placeholder="description">
+                </div>
+                <div class="form-group">
+                    <label for="number">Starting Balance</label>
+                    <input type="number" class="form-control" name="balance" id="balance" value=0>
+                </div>
+                <div class="form-group">
+                    <label for="currency">Currency</label>
+                        <select class="select2" name="currency" id="currency" style="width: 100%;">
+                            <option selected>RWF</option>
+                            <option>USD</option>
+                            <option>Euro</option>
+                            <option>Yuan</option>
+                            <option>UGX</option>
+                            <option>KSX</option>
+                            <option>TSX</option>
+                        </select>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit button" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script></script>
+
+{% endblock %}

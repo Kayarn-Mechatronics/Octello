@@ -1,0 +1,134 @@
+{% extends 'Index/Base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Pricing</h1>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container">
+        <!-- /.row -->
+        <div class="row">
+    <div class="col-md-3">
+      <div class="card card-primary shadow-lg">
+        <div class="card-header">
+            <h3 class="m-1">Community Plan</h3>
+            <h6 class="m-1">Free</h6>
+          <!-- /.card-tools -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <p><i class="nav-icon fas fa-users"></i> Up to 3 Users</p>
+            <p><i class="nav-icon fas fa-save"></i> 250 Mb of Storage</p>
+            <p><i class="nav-icon fas fa-phone"></i> 24/7 Support services</p>
+            <p><i class="nav-icon fas fa-play"></i> Free Tutorials</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Limited Market Inteligence</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Free Weekly/Monthly reports</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Limited Insight</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Social media metrics</p>
+        </div>
+        <a href="{% url 'Login' %}" type="button" class="btn btn-block bg-gradient-primary">Sign Up</a>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3">
+      <div class="card card-success shadow-lg">
+        <div class="card-header">
+            <h3 class="m-1">Professional Plan</h3>
+            <h6 class="m-1"> Starts at 90,000 Rwf/Month</h6>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <p><i class="nav-icon fas fa-users"></i> Up to 12 Users</p>
+            <p><i class="nav-icon fas fa-save"></i> 20 GB of Storage</p>
+            <p><i class="nav-icon fas fa-phone"></i> 24/7 Support services</p>
+            <p><i class="nav-icon fas fa-play"></i> Free Tutorials</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Limited Market Inteligence</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Free Weekly/Monthly reports</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Limited Insight</p>
+        </div>
+        <a href="." type="button" class="btn btn-block bg-gradient-primary">Sign Up</a>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3">
+      <div class="card card-warning shadow-lg">
+        <div class="card-header">
+            <h3 class="m-1">Enterprise Plan</h3>
+            <h6 class="m-1"> Starts at 350,000 Rwf/Month</h6>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <p><i class="nav-icon fas fa-users"></i> Unlimited Users</p>
+            <p><i class="nav-icon fas fa-save"></i> Unlimited Storage</p>
+            <p><i class="nav-icon fas fa-phone"></i> 24/7 Support services</p>
+            <p><i class="nav-icon fas fa-play"></i> Onsite Training</p>
+            <p><i class="nav-icon fas fa-play"></i> Onsite Hosting</p>
+            <p><i class="nav-icon fas fa-play"></i> Custom Domain</p>
+            <p><i class="nav-icon fas fa-play"></i> Mail Server Intergration</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Full Market Inteligence</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Live Report</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Data-Backed Insight</p>
+        </div>
+        <a href="." type="button" class="btn btn-block bg-gradient-primary">Sign Up</a>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3">
+      <div class="card card-danger shadow-lg">
+        <div class="card-header">
+            <h3 class="m-1">Custom Plan</h3>
+            <h6 class="m-1"> Negotiated</h6>
+        </div>
+        <div class="card-body">
+            <p><i class="nav-icon fas fa-users"></i> Unlimited Users</p>
+            <p><i class="nav-icon fas fa-save"></i> Unlimited Storage</p>
+            <p><i class="nav-icon fas fa-phone"></i> 24/7 Support services</p>
+            <p><i class="nav-icon fas fa-phone"></i> Onsite Support services</p>
+            <p><i class="nav-icon fas fa-person-booth"></i> Onsite Training</p>
+            <p><i class="nav-icon fas fa-server"></i> Onsite Hosting</p>
+            <p><i class="nav-icon fas fa-play"></i> Custom Domain</p>
+            <p><i class="nav-icon fas fa-play"></i> Mail Server Intergration</p>
+            <p><i class="nav-icon fas fa-hands-helping"></i> Full Market Inteligence</p>
+            <p><i class="nav-icon fas fa-dot-circle"></i> Live Report</p>
+            <p><i class="nav-icon fa fa-chalkboard-teacher"></i> Data-Backed Insight</p>
+        </div>
+        <a href="." type="button" class="btn btn-block bg-gradient-primary">Book a call</a>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.col -->
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+
+
+
+{% endblock %}
