@@ -1,0 +1,7 @@
+django-heroku
+django
+django-storages
+gunicorn
+whitenoise
+psycopg2
+twilio
