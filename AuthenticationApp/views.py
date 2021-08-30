@@ -30,4 +30,11 @@ class LoginView:
     def login_page(request):
         return render(request, 'AuthenticationApp/Login.html')
     
-from django.db.models import *
+class RegisterView:
+    def register_page(request):
+        return render(request, 'AuthenticationApp/Register.html')
+
+    def register(request):
+        if request.method == "POST":
+            print(request.POST.dict())
+        return redirect(resolve_url('MainDashboard'))
