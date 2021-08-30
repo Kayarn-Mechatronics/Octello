@@ -1,16 +1,7 @@
-<<<<<<< HEAD
 django-heroku
 django
 django-storages
 gunicorn
 whitenoise
 psycopg2
-=======
-django-heroku
-django
-django-storages
-gunicorn
-whitenoise
-psycopg2
->>>>>>> 81f68aa501f90a9b57db1ad4238a34996aa3e639
 twilio
