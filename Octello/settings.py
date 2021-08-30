@@ -83,13 +83,21 @@ WSGI_APPLICATION = 'Octello.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd6v5nac2cohfp4',
+        'USER': 'sdneugnlgsswdd',
+        'PASSWORD': '91285d4e9db8811a4c7e729afe0b047ae8d537165c2396fd5d4e4be0cd6d79e5',
+        'HOST': 'ec2-44-194-225-27.compute-1.amazonaws.com',
+        'PORT': '5432'
+    },
+    'test': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, 'Octello.sqlite3'),
         },
 }
+
 
 
 # Password validation

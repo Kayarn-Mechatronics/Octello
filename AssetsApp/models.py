@@ -13,7 +13,7 @@ class AssetsCategories(models.Model):
     datetime_added = models.DateTimeField(default=datetime.now())
     
     class Meta:
-        db_tablespace = 'Assets'
+        pass
     
     @classmethod    
     def add_category(self, description):
@@ -46,7 +46,7 @@ class Assets(models.Model):
     #item_id = models.ForeignKey(Items, on_delete=models.CASCADE, null=True)
         
     class Meta:
-        db_tablespace = 'Assets'
+        pass
         
     @classmethod
     def add_asset(self, description):
