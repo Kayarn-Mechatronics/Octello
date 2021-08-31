@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['octello.herokuapp.com', '127.0.0.1']
 
+AUTH_USER_MODEL = 'AuthenticationApp.User'
 
 # Application definition
 
