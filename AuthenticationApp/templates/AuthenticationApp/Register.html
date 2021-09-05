@@ -28,7 +28,15 @@
       <form action="{% url 'Enroll' %}" method="POST">
         {% csrf_token %}
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Full name" name="names" id="names">
+          <input type="text" class="form-control" placeholder="First name" name="first_name" id="first_name">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Last name" name="last_name" id="last_name">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
