@@ -10,7 +10,7 @@ class AccountsView:
         print(serialize('json', models.Accounts.objects.all()))
         context = {'accounts_list' : models.Accounts.to_json()}
         context['total_accounts'] = len(context['accounts_list'])
-        return render(request, 'FinanceApp/accounts/Accounts.html', context)
+        return render(request, 'FinanceApp/Accounts/Accounts.html', context)
     
     def add_account(request):
         if request.method == 'POST':
@@ -35,7 +35,7 @@ class AccountsView:
         
     def statement(request, account_id):
         print(account_id)
-        return render(request, 'FinanceApp/accounts/statements.html')  
+        return render(request, 'FinanceApp/Accounts/statements.html')  
     
      
 class TransactionView:

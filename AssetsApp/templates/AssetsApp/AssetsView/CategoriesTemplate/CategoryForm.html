@@ -2,7 +2,7 @@
 
 {% block CategoryForm %}
 
-<div class="modal fade" id="AssetsCategory">
+<div class="modal fade" id="AssetsCategoryForm">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header">
@@ -11,7 +11,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{% url 'Add_Assets_Category' %}  method="POST">
+        <form action="{% url 'Add_Assets_Category' %}"  method="POST">
             <div class="modal-body">
                 {% csrf_token %}
                 <div class="form-group">

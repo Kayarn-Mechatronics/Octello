@@ -10,6 +10,7 @@ urlpatterns = [
     
     #Categories
     path('categories/add_category', views.AssetsView.add_category, name='Add_Assets_Category'),
+    path('categories/add_subcategory', views.AssetsView.add_category, name='Add_Assets_SubCategory'),
     
     #Transactions
     path('transactions', views.TransactionView.all_transactions, name='Assets_Transactions')

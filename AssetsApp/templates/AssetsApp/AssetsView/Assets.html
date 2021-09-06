@@ -26,6 +26,12 @@
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#AssetForm">
                         Add Asset
                     </button>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#AssetsCategoryForm">
+                        Add Category
+                    </button>
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#AssetsSubCategoryForm">
+                        Add Sub-Category
+                    </button>
                 </div>
             </div>
             <!-- List of Assets-->
@@ -107,6 +113,8 @@
         </div>
         <!-- Asset Creation Form-->
         {% include 'AssetsApp/AssetsView/AssetForm.html' %}
+        {% include 'AssetsApp/AssetsView/CategoriesTemplate/CategoryForm.html' %}
+        {% include 'AssetsApp/AssetsView/CategoriesTemplate/SubCategoryForm.html' with category_list=category%}
     </section>
   </div>
 

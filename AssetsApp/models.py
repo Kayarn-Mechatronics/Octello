@@ -9,11 +9,12 @@ import AuthenticationApp
 class AssetsCategories(models.Model):
     enterprise_id = models.ForeignKey(AuthenticationApp.models.Enterprises, on_delete=models.CASCADE)
     id = models.PositiveIntegerField(primary_key=True, editable=False)
-    parent_id = models.PositiveIntegerField(null=True,)
+    parent_id = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=40, blank=False)
     description = models.TextField(blank=True, null=True)
     is_sub_category = models.BooleanField()
     datetime_added = models.DateTimeField(default=datetime.now())
+    user = models.ForeignKey(AuthenticationApp.models.User, on_delete=models.CASCADE)
     
     class Meta:
         pass
@@ -21,19 +22,23 @@ class AssetsCategories(models.Model):
     @classmethod    
     def add_category(self, enterprise, user, description):
         self.objects.create(id=self.objects.count() + 1,
-                            name = description['name'], 
+                            enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise_id=enterprise),
+                            name = description['category_name'], 
                             description = description['description'],
                             is_sub_category = 0,
-                            datetime_added = datetime.now()
+                            datetime_added = datetime.now(),
+                            user = AuthenticationApp.models.User.objects.get(id=user)
                             )
     @classmethod 
     def add_sub_category(self, enterprise, user, description):
         self.objects.create(id=self.objects.count() + 1,
-                            parent_id = int(description['category']),
-                            name = description['name'],
+                            enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise_id=enterprise),
+                            parent_id = self.objects.get(id=description['parent_category_id']),
+                            name = description['category_name'],
                             description = description['description'],
                             is_sub_category = 1,
-                            datetime_added = datetime.now()
+                            datetime_added = datetime.now(),
+                            user = AuthenticationApp.models.User.objects.get(id=user)
                             )
       
 class Assets(models.Model):

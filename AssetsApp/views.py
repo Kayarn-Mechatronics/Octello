@@ -18,13 +18,13 @@ class AssetsView:
             if asset_id != False:
                 if description['balance'] != '0':
                     assets_db.starting_balance(asset_id, int(description['balance']), description['currency'])
-                    return redirect(resolve_url('Assets'))
+                    return redirect(resolve_url('AssetsList'))
                 else:
-                    return redirect(resolve_url('Assets'))
+                    return redirect(resolve_url('AssetsList'))
             else:
-                return redirect(resolve_url('Assets'))
+                return redirect(resolve_url('AssetsList'))
         else:
-            return redirect(resolve_url('Assets'))
+            return redirect(resolve_url('AssetsList'))
         
     def lookup(request):
         if request.method == 'GET':
@@ -32,8 +32,21 @@ class AssetsView:
         
     def add_category(request):
         if request.method == 'POST':
-            models.AssetsCategories.add_category(request.POST.dict())
-            return redirect(resolve_url('Assets'))
+            enterprise = request.user.enterprise_id
+            user= request.user.id
+            description = request.POST.dict()
+            models.AssetsCategories.add_category(enterprise, user, description)
+            return redirect(resolve_url('AssetsList'))
+        else:
+            return redirect(resolve_url('AssetsList'))
+    
+    def add_sub_category(request):
+        if request.method == 'POST':
+            enterprise = request.user.enterprise_id
+            user= request.user.id
+            description = request.POST.dict()
+            models.AssetsCategories.add_sub_category(enterprise, user, description)
+            return redirect(resolve_url('AssetsList'))
         
     def statement(request, asset_id):
         print(asset_id)
