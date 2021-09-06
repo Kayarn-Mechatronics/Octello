@@ -30,6 +30,8 @@ ALLOWED_HOSTS = ['octello.herokuapp.com', '127.0.0.1']
 
 AUTH_USER_MODEL = 'AuthenticationApp.User'
 
+#SESSION_ENGINE= 'AuthenticationApp.Sessions'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -131,7 +133,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

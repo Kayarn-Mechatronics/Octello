@@ -2,9 +2,12 @@ from django.db import models
 from datetime import *
 from django import utils
 
+import AuthenticationApp
+
 
 # Create your models here. 
 class AssetsCategories(models.Model):
+    enterprise_id = models.ForeignKey(AuthenticationApp.models.Enterprises, on_delete=models.CASCADE)
     id = models.PositiveIntegerField(primary_key=True, editable=False)
     parent_id = models.PositiveIntegerField(null=True,)
     name = models.CharField(max_length=40, blank=False)
@@ -16,7 +19,7 @@ class AssetsCategories(models.Model):
         pass
     
     @classmethod    
-    def add_category(self, description):
+    def add_category(self, enterprise, user, description):
         self.objects.create(id=self.objects.count() + 1,
                             name = description['name'], 
                             description = description['description'],
@@ -24,7 +27,7 @@ class AssetsCategories(models.Model):
                             datetime_added = datetime.now()
                             )
     @classmethod 
-    def add_sub_category(self, description):
+    def add_sub_category(self, enterprise, user, description):
         self.objects.create(id=self.objects.count() + 1,
                             parent_id = int(description['category']),
                             name = description['name'],
@@ -34,6 +37,7 @@ class AssetsCategories(models.Model):
                             )
       
 class Assets(models.Model):
+    enterprise_id = models.ForeignKey(AuthenticationApp.models.Enterprises, on_delete=models.CASCADE)
     asset_id = models.CharField(max_length=20, primary_key=True, editable=False)
     category = models.ForeignKey(AssetsCategories, on_delete=models.CASCADE)
     sub_category = models.ForeignKey(AssetsCategories, on_delete=models.CASCADE, related_name='sub_category')
@@ -49,10 +53,11 @@ class Assets(models.Model):
         pass
         
     @classmethod
-    def add_asset(self, description):
+    def add_asset(self, enterprise, user, description):
         asset_id = "OCASS-{0}".format(self.objects.count()+ 1)
         try:
             self.objects.create(
+                enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise),
                 asset_id = asset_id,
                 name = description["account_name"],
                 category = AssetsCategories.objects.get(id=1),

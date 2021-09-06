@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.shortcuts import render, redirect, resolve_url
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, logout
+from django.db import models
 from . import models
 
 
@@ -9,7 +10,7 @@ class AuthenticationApi:
     def authenticate(request):
         if request.method == "POST":
             credentials = request.POST.dict()
-            user = authenticate(request, username=credentials['username'], password=credentials['password'])
+            user = models.User.authenticate(request, username=credentials['username'], password=credentials['password'])
             if user:
                 login(request, user)
                 return redirect(resolve_url('MainDashboard'))
@@ -52,3 +53,7 @@ class RegisterView:
                 return redirect(resolve_url('Registration_Page'))
         else:
             return redirect(resolve_url('Registration_Page'))
+
+
+
+

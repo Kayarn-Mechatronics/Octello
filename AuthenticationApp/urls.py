@@ -13,4 +13,7 @@ urlpatterns = [
     #Registration View
     path('register', views.RegisterView.register_page, name='Registration_Page'),
     path('enroll', views.RegisterView.register, name='Enroll')
+
+    #Setup View
+    #path('setup', views.ConfigurationViews.configuration_page, name='Setup_Page')
     ]

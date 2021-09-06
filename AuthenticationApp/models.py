@@ -1,7 +1,8 @@
 from django.db import models, utils
 from django.contrib.auth.models import AbstractUser
-from django.shortcuts import get_object_or_404
+from django.contrib.sessions.base_session import AbstractBaseSession
 from datetime import *
+
 
 class Enterprises(models.Model):
     enterprise_id = models.CharField(primary_key=True, max_length=20, null=False, unique=True)
@@ -73,8 +74,13 @@ class User(AbstractUser):
         except self.DoesNotExist:
             return None
 
+    @classmethod
+    def authenticate(self, request,username, password):
+        try:
+            return self.objects.get(username=username, password=password)
+        except self.DoesNotExist:
+            return None
+
     @property
     def hash(password, action):
         pass
-    
-    

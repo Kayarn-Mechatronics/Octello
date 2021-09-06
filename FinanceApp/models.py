@@ -1,6 +1,7 @@
 from django.db import models, utils
 from datetime import *
 from AssetsApp.models import Assets, AssetsCategories
+import AuthenticationApp
 from django.core import serializers
 # Create your models here.
 class Accounts(Assets):
@@ -9,10 +10,11 @@ class Accounts(Assets):
         proxy=True
     
     @classmethod
-    def add_account(self, description):
+    def add_account(self, enterprise, user, description):
         asset_id = "OCASS-{0}".format(self.objects.count()+ 1)
         try:
             self.objects.create(
+                enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise),
                 asset_id = asset_id,
                 name = description["account_name"],
                 category = AssetsCategories.objects.get(id=1),
@@ -76,6 +78,7 @@ class Accounts(Assets):
             pass
 
 class TransactionsDB(models.Model):
+    enterprise_id = models.ForeignKey(AuthenticationApp.models.Enterprises, on_delete=models.CASCADE)
     transaction_id = models.CharField(primary_key=True, max_length=15, unique=True, editable=False) 
     datetime_stamp = models.DateTimeField()
     type = models.CharField(max_length=20, blank=False)
@@ -91,12 +94,13 @@ class TransactionsDB(models.Model):
     exchange_rate = models.PositiveBigIntegerField(null=True, blank=False )
     comments = models.TextField(null=True, blank=True)
     attachments = models.FilePathField(allow_folders=True, allow_files=True, null=True)
-    user_posted = models.CharField(max_length=40, null=True)
+    user = models.CharField(max_length=40, null=True)
     budget_id = models.CharField(max_length=40, null=True)
     
     @classmethod
-    def inbound(self, data):
+    def inbound(self, enterprise, user, data):
         self.objects.create(
+            enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise),
             transaction_id = "OCFIN-TR{}".format(self.objects.count()+ 1), 
             datetime_stamp = datetime.now(),
             type = "Inbound",
@@ -113,8 +117,9 @@ class TransactionsDB(models.Model):
         )   
     
     @classmethod
-    def outbound(self, data):
+    def outbound(self, enterprise, user, data):
         self.objects.create(
+            enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise),
             transaction_id = "OCFIN-TR{}".format(self.objects.count()+ 1), 
             datetime_stamp = datetime.now(),
             type = "Outbound",
@@ -135,11 +140,12 @@ class TransactionsDB(models.Model):
         
           
 class Categories(models.Model):
+    enterprise_id = models.ForeignKey(AuthenticationApp.models.Enterprises, on_delete=models.CASCADE)
     id = models.PositiveIntegerField(primary_key=True, editable=False)
     flow_type = models.CharField(max_length=40) #distinguish btn Income & Expense
     parent_id = models.PositiveIntegerField(null=True)
     description = models.CharField(max_length=40, blank=False)
     comment = models.TextField(blank=True, null=True)
     is_sub_category = models.BooleanField()
+    datetime_added = models.DateTimeField()
     
-#emmanuelbienvenue10@gmail.com
