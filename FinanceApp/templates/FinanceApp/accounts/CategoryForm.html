@@ -1,30 +1,22 @@
 {% load static %}
 
-{% block SubCategoryForm %}
+{% block CategoryForm %}
 
-<div class="modal fade" id="AssetsSubCategoryForm">
+<div class="modal fade" id="AccountCategoryForm">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Sub Category Form</h4>
+          <h4 class="modal-title">Accounts Categories Form</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="{% url 'Add_Assets_SubCategory' %}" method="POST">
+        <form action="{% url 'Add_Account_Category' %}"  method="POST">
             <div class="modal-body">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="type">Parent Category</label>
-                        <select class="form-control" name="parent_category_id" id="parent_category_id" style="width: 100%;">
-                            {% for item in category_list %}
-                                <option value="{{ item.pk }}">{{ item.name }}</option>
-                            {% endfor %}
-                        </select>
-                </div>
-                <div class="form-group">
-                    <label for="sub_category_name">Sub Category Name</label>
-                    <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Sub Category">
+                    <label for="category_name">Category Name</label>
+                    <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Name">
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>

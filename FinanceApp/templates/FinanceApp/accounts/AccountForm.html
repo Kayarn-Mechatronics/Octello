@@ -21,21 +21,9 @@
                 <div class="form-group">
                     <label for="sub_category">Sub-Category</label>
                         <select class="select2" name="sub_category" id="sub_category" style="width: 100%;">
-                            <option value=2 selected>Account</option>
-                            <option>Person</option>
-                            <option>Credit Card</option>
-                            <option>Debit Card</option>
-                            <option>E-wallet</option>
-                            <option>Cryptocurrency</option>
-                            <option>Person</option>
-                            <option>Cash</option>
-                            <option>Loan</option>
-                            <option>Insurance</option>
-                            <option>Credit Card</option>
-                            <option>Investments</option>
-                            <option>Overdraft</option>
-                            <option>Savings</option>
-                            <option>Institution</option>
+                            {% for item in AccountFormContext.Categories %}
+                                <option value="{{ item.pk }}">{{ item.name }}</option>
+                            {% endfor %}
                         </select>
                 </div>
                 <div class="form-group">

@@ -26,12 +26,9 @@
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#AccountForm">
                         Add Account
                     </button>
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#AssetCategoryForm">
-                        Add Category
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#AccountCategoryForm">
+                        Add Categories
                     </button>
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#AssetSubCategoryForm">
-                        Add Sub-Category
-                  </button>
                 </div>
             </div> 
             <!-- List of Accounts-->
@@ -66,7 +63,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                          {% for account in accounts_list %}
+                          {% for account in Accounts %}
                           <tr>
                               <td>{{ account.account_id }}</td>
                               <td>{{ account.name }}</td>
@@ -110,7 +107,8 @@
             </div>
         </div>
         <!-- Account Creation Form-->
-        {% include 'FinanceApp/accounts/AccountForm.html' with AccountFormContext=AccountFormContext %}
+        {% include 'FinanceApp/Accounts/AccountForm.html' with AccountFormContext=AccountFormContext %}
+        {% include 'FinanceApp/Accounts/CategoryForm.html' %}
     </section>
   </div>
 

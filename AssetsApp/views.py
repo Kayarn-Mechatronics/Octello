@@ -1,20 +1,25 @@
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render, resolve_url
+from django.core import serializers
 from . import models
 from datetime import *
 
 # Create your views here.
 class AssetsView:
     def all_assets(request):
+        categories =  models.AssetsCategories.all_categories(request.user.enterprise_id)
         context = {'assets_list' : models.Assets.to_json()}
         context['total_assets'] = len(context['assets_list'])
+        context['categories'] = categories
         return render(request, 'AssetsApp/AssetsView/Assets.html', context)
     
     def add_asset(request):
         if request.method == 'POST':
+            enterprise = request.user.enterprise_id
+            user= request.user.id
             description = request.POST.dict()
             assets_db = models.Assets
-            asset_id = assets_db.add_asset(description)
+            asset_id = assets_db.add_asset(enterprise, user, description)
             if asset_id != False:
                 if description['balance'] != '0':
                     assets_db.starting_balance(asset_id, int(description['balance']), description['currency'])

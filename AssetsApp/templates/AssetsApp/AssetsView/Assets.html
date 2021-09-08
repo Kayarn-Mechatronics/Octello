@@ -112,11 +112,11 @@
             </div>
         </div>
         <!-- Asset Creation Form-->
-        {% include 'AssetsApp/AssetsView/AssetForm.html' %}
+        {% include 'AssetsApp/AssetsView/AssetForm.html' with category_list=categories %}
         {% include 'AssetsApp/AssetsView/CategoriesTemplate/CategoryForm.html' %}
-        {% include 'AssetsApp/AssetsView/CategoriesTemplate/SubCategoryForm.html' with category_list=category%}
+        {% include 'AssetsApp/AssetsView/CategoriesTemplate/SubCategoryForm.html' with category_list=categories %}
     </section>
-  </div>
+  </div> 
 
 {% endblock %}
 

@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import *
-from django import utils
+from django.db import utils
 
 import AuthenticationApp
 
@@ -40,6 +40,21 @@ class AssetsCategories(models.Model):
                             datetime_added = datetime.now(),
                             user = AuthenticationApp.models.User.objects.get(id=user)
                             )
+    @classmethod
+    def all_categories(self, enterprise):
+        return  self.objects.filter(enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise_id=enterprise)
+                                    )
+    
+    @classmethod
+    def categories(self, enterprise):
+        return  self.objects.filter(enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise_id=enterprise)
+                                    )
+
+    @classmethod
+    def sub_categories(self, enterprise):
+        return  self.objects.filter(enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise_id=enterprise),
+                            is_sub_category = 1
+                                    )
       
 class Assets(models.Model):
     enterprise_id = models.ForeignKey(AuthenticationApp.models.Enterprises, on_delete=models.CASCADE)
@@ -62,7 +77,7 @@ class Assets(models.Model):
         asset_id = "OCASS-{0}".format(self.objects.count()+ 1)
         try:
             self.objects.create(
-                enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise),
+                enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise_id=enterprise),
                 asset_id = asset_id,
                 name = description["account_name"],
                 category = AssetsCategories.objects.get(id=1),
