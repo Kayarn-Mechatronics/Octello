@@ -9,7 +9,7 @@ class AccountsCategories(models.Model):
     id = models.PositiveIntegerField(primary_key=True, editable=False)
     name = models.CharField(max_length=40, blank=False)
     description = models.TextField(blank=True, null=True)
-    datetime_added = models.DateTimeField(default=datetime.now())
+    datetime_added = models.DateTimeField()
     user = models.ForeignKey(AuthenticationApp.models.User, on_delete=models.CASCADE)
     
     class Meta:
@@ -95,7 +95,7 @@ class Accounts(models.Model):
             # data['fees'] = None
             # data['budget_id'] = None
             # data['comments'] = None
-            TransactionsDB.outbound(data)
+            TransactionsDB.outbound(enterprise, user, data)
             
         elif data['balance_flow'] ==  1:
             # data = {'to_account' : account_id}
@@ -109,28 +109,69 @@ class Accounts(models.Model):
             # data['fees'] = None
             # data['budget_id'] = None
             # data['comments'] = None
-            TransactionsDB.inbound(data)
+            TransactionsDB.inbound(enterprise, user, data)
         else:
             pass
+
+          
+class TransactionsCategories(models.Model):
+    enterprise_id = models.ForeignKey(AuthenticationApp.models.Enterprises, on_delete=models.CASCADE)
+    id = models.PositiveIntegerField(primary_key=True, editable=False)
+    flow_type = models.SmallIntegerField() #distinguish btn Income & Expense
+    parent_id = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=40, blank=False)
+    description = models.TextField(blank=True, null=True)
+    is_sub_category = models.BooleanField()
+    datetime_added = models.DateTimeField()
+    user_id = models.ForeignKey(AuthenticationApp.models.User, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'FinanceApp_TransactionsCategories'
+
+    @classmethod    
+    def add_category(self, enterprise, user, description): 
+        self.objects.create(id=self.objects.count() + 1,
+                            enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise_id=enterprise),
+                            flow_type = int(description['class']),
+                            name = description['category_name'], 
+                            description = description['description'],
+                            is_sub_category = 0,
+                            datetime_added = datetime.now(),
+                            user_id = AuthenticationApp.models.User.objects.get(id=user)
+                            )
+    
+    @classmethod 
+    def add_sub_category(self, enterprise, user, description):
+        self.objects.create(id=self.objects.count() + 1,
+                            enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise_id=enterprise),
+                            parent_id = self.objects.get(id=description['category_id']),
+                            flow_type = -1,
+                            name = description['category_name'],
+                            description = description['description'],
+                            is_sub_category = 1,
+                            datetime_added = datetime.now(),
+                            user_id = AuthenticationApp.models.User.objects.get(id=user)
+                            )
+ 
 
 class TransactionsDB(models.Model):
     enterprise_id = models.ForeignKey(AuthenticationApp.models.Enterprises, on_delete=models.CASCADE)
     transaction_id = models.CharField(primary_key=True, max_length=15, unique=True, editable=False) 
     datetime_stamp = models.DateTimeField()
-    type = models.CharField(max_length=20, blank=False)
-    from_account = models.CharField(max_length=30, null=True, blank=False)
-    to_account = models.CharField(max_length=30, null=True, blank=False)
-    category = models.CharField(max_length=50, null=True,blank=False)
-    sub_category = models.CharField(max_length=50, null=True, blank=False)
+    type = models.SmallIntegerField()
+    from_account = models.ForeignKey(Accounts, null=True, blank=True, on_delete=models.CASCADE, related_name='from_account')
+    to_account = models.ForeignKey(Accounts, null=True, blank=True, on_delete=models.CASCADE, related_name='to_account')
+    category = models.ForeignKey(TransactionsCategories, null=True,blank=False, on_delete=models.CASCADE, related_name='category')
+    sub_category = models.ForeignKey(TransactionsCategories, null=True, blank=False, on_delete=models.CASCADE, related_name='sub_category')
     from_amount = models.PositiveBigIntegerField(null=True, blank=False)
     from_currency = models.CharField(max_length=5, null=True, blank=False)
     to_amount = models.PositiveBigIntegerField(null=True, blank=False)
     to_currency = models.CharField(max_length=5, null=True, blank=False)
-    fees = models.CharField(max_length=30, null=True, blank=False)
+    fees = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     exchange_rate = models.PositiveBigIntegerField(null=True, blank=False )
     comments = models.TextField(null=True, blank=True)
     attachments = models.FilePathField(allow_folders=True, allow_files=True, null=True)
-    user = models.CharField(max_length=40, null=True)
+    user = models.ForeignKey(AuthenticationApp.models.User, on_delete=models.CASCADE)
     budget_id = models.CharField(max_length=40, null=True)
 
     class Meta:
@@ -143,14 +184,14 @@ class TransactionsDB(models.Model):
             transaction_id = "OCFIN-TR{}".format(self.objects.count()+ 1), 
             datetime_stamp = datetime.now(),
             type = "Inbound",
-            to_account = data['to_account'],
-            category = data['category'],
-            sub_category = data['sub-category'],
+            to_account = Accounts.objects.get(account_id=data['to_account']),
+            category = TransactionsCategories.objects.get(id=data['category']),
+            sub_category = TransactionsCategories.objects.get(id=data['sub_category']),
             to_amount = data['to_amount'],
             to_currency = data['to_currency'],
             comments = data['comments'],
             attachments = data['attachments'],
-            user_posted = data['user_id'],
+            user =  AuthenticationApp.models.User.objects.get(id=user),
             fees = data['fees'],
             budget_id = data['budget_id']
         )   
@@ -162,53 +203,15 @@ class TransactionsDB(models.Model):
             transaction_id = "OCFIN-TR{}".format(self.objects.count()+ 1), 
             datetime_stamp = datetime.now(),
             type = "Outbound",
-            from_account = data['from_account'],
-            category = data['category'],
-            sub_category = data['sub-category'],
+            from_account = Accounts.objects.get(account_id=data['from_account']),
+            category = TransactionsCategories.objects.get(id=data['category']),
+            sub_category = TransactionsCategories.objects.get(id=data['sub_category']),
             from_amount = data['from_amount'],
             from_currency = data['from_currency'],
             comments = data['comments'],
             attachments = data['attachments'],
-            user_posted = data['user_id'],
+            user = AuthenticationApp.models.User.objects.get(id=user),
             fees = data['fees'],
             budget_id = data['budget_id']
-        )   
-    @classmethod
-    def to_json(self):
-        obj =  serializers.serialize('json', self.objects.all())
-        
-          
-class TransactionsCategories(models.Model):
-    enterprise_id = models.ForeignKey(AuthenticationApp.models.Enterprises, on_delete=models.CASCADE)
-    id = models.PositiveIntegerField(primary_key=True, editable=False)
-    flow_type = models.CharField(max_length=40) #distinguish btn Income & Expense
-    parent_id = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
-    description = models.CharField(max_length=40, blank=False)
-    comment = models.TextField(blank=True, null=True)
-    is_sub_category = models.BooleanField()
-    datetime_added = models.DateTimeField()
-
-    class Meta:
-        db_table = 'FinanceApp_TransactionsCategories'
-
-    @classmethod    
-    def add_category(self, enterprise, user, description):
-        self.objects.create(id=self.objects.count() + 1,
-                            enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise_id=enterprise),
-                            name = description['category_name'], 
-                            description = description['description'],
-                            datetime_added = datetime.now(),
-                            user = AuthenticationApp.models.User.objects.get(id=user)
-                            )
-    
-    @classmethod 
-    def add_sub_category(self, enterprise, user, description):
-        self.objects.create(id=self.objects.count() + 1,
-                            enterprise_id = AuthenticationApp.models.Enterprises.objects.get(enterprise_id=enterprise),
-                            parent_id = self.objects.get(id=description['parent_category_id']),
-                            name = description['category_name'],
-                            description = description['description'],
-                            is_sub_category = 1,
-                            datetime_added = datetime.now(),
-                            user = AuthenticationApp.models.User.objects.get(id=user)
-                            )
+        ) 
+                           

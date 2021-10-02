@@ -23,16 +23,84 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 offset-md-0">
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-md">
-                            Add Transactions
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#TransactionForm">
+                            Add Transaction
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-md">
-                            Categories
+                            View Categories
+                        </button>
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#TransactionsCategoryForm">
+                            Add Categories
+                        </button>
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#TransactionsSubCategoryForm">
+                            Add Sub-Categories
                         </button>
                         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-md">
                             Report
                         </button>
                 </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">Monthly Recap Report</h5>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- ./card-body -->
+              <div class="card-footer">
+                <div class="row">
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
+                      <h5 class="description-header">RWF 35,210,000</h5>
+                      <span class="description-text">TOTAL REVENUES</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
+                      <h5 class="description-header">RWF 10,390,000</h5>
+                      <span class="description-text">TOTAL EXPENSES</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block border-right">
+                      <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
+                      <h5 class="description-header">RWF 24,813,000</h5>
+                      <span class="description-text">TOTAL LIABILITIES</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-sm-3 col-6">
+                    <div class="description-block">
+                      <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
+                      <h5 class="description-header">RWF 1,278,000</h5>
+                      <span class="description-text">BALANCE</span>
+                    </div>
+                    <!-- /.description-block -->
+                  </div>
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
             </div>
             <div class="row mt-2">
                 <div class="col-md-12 offset-md-0">
@@ -84,6 +152,10 @@
         </div>
     </section>
 </div>
+
+{% include 'FinanceApp\TransactionsView\CategoryForm.html' %}
+{% include 'FinanceApp\TransactionsView\SubCategoryForm.html' with Categories=TransactionsCategories %}
+{% include 'FinanceApp\TransactionsView\TransactionForm.html' %}
 
 {% endblock %}
 <!-- Scripts-->

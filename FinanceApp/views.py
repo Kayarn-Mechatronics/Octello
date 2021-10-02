@@ -18,8 +18,8 @@ class AccountsView:
             description = request.POST.dict()
             account_id = models.Accounts.add_account(enterprise, user, description)
             if account_id != False:
-                if int(request.POST.dict()['balance']) != 0:
-                    models.Accounts.starting_balance(account_id, int(request.POST.dict()['balance_flow']),int(request.POST.dict()['balance']), request.POST.dict()['currency'])
+                if int(description['balance']) != 0:
+                    models.Accounts.starting_balance(account_id, int(description['balance_flow']),int(request.POST.dict()['balance']), request.POST.dict()['currency'])
                     return redirect(resolve_url('Accounts'))
                 else:
                     return redirect(resolve_url('Accounts'))
@@ -54,8 +54,8 @@ class AccountsView:
      
 class TransactionView:
     def all_transactions(request):
-        print(models.TransactionsDB.to_json())
-        context= models.TransactionsDB.to_json()
+        context = {'Transactions' : models.TransactionsDB }
+        context['TransactionsCategories'] =  models.TransactionsCategories.objects.filter(enterprise_id=request.user.enterprise_id, is_sub_category=0, flow_type=-1)
         return render(request, 'FinanceApp/TransactionsView/TransactionsList.html', context)
 
     def add_transaction(request):
@@ -70,9 +70,14 @@ class TransactionView:
             return redirect(resolve_url('Transactions'))
         else:
             return redirect(resolve_url('Transactions'))
-    
-class CategoriesView:
-    def all_categories(request):
-        return render(request, 'FinanceApp/TransactionsView/categories.html')
 
+    def add_sub_category(request):
+        if request.method == 'POST':
+            enterprise = request.user.enterprise_id
+            user= request.user.id
+            description = request.POST.dict()
+            models.TransactionsCategories.add_sub_category(enterprise, user, description)
+            return redirect(resolve_url('Transactions'))
+        else:
+            return redirect(resolve_url('Transactions'))
     

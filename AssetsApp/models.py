@@ -13,7 +13,7 @@ class AssetsCategories(models.Model):
     name = models.CharField(max_length=40, blank=False)
     description = models.TextField(blank=True, null=True)
     is_sub_category = models.BooleanField()
-    datetime_added = models.DateTimeField(default=datetime.now())
+    datetime_added = models.DateTimeField()
     user = models.ForeignKey(AuthenticationApp.models.User, on_delete=models.CASCADE)
     
     class Meta:

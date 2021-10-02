@@ -14,8 +14,8 @@ urlpatterns = [
     #Transactions
     path('transactions', views.TransactionView.all_transactions, name='Transactions'),
     path('transactions/add', views.TransactionView.add_transaction, name='Add_Transaction'),
-    path('transactions/categories', views.CategoriesView.all_categories, name='Transaction_Categories'),
-    path('transactions/categories/add', views.CategoriesView.all_categories, name='Add_Transaction_Category'),
-    path('transactions/subcategories', views.CategoriesView.all_categories, name='Transaction_SubCategories'),
-    path('transactions/subcategories/add', views.CategoriesView.all_categories, name='Add_Transaction_SubCategory')
+    path('transactions/categories', views.TransactionView.add_transaction, name='Transaction_Categories'),
+    path('transactions/categories/add', views.TransactionView.add_category, name='FinanceApp/Add_Transaction_Category'),
+    path('transactions/subcategories', views.TransactionView.add_transaction, name='FinanceApp/Transaction_SubCategories'),
+    path('transactions/subcategories/add', views.TransactionView.add_sub_category, name='FinanceApp/Add_Transaction_SubCategory')
     ]
